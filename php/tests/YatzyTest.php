@@ -18,7 +18,7 @@ class YatzyTest extends TestCase
     public function test_yatzy_scores_50(): void
     {
         $expected = 50;
-        $actual = Yatzy::yatzyScore([4, 4, 4, 4, 4]);
+        $actual = Yatzy::yatzy([4, 4, 4, 4, 4]);
         self::assertSame($expected, $actual->getTotal());
         //self::assertSame(50, Yatzy::yatzyScore([6, 6, 6, 6, 6]));
         //self::assertSame(0, Yatzy::yatzyScore([6, 6, 6, 6, 3]));
@@ -60,7 +60,7 @@ class YatzyTest extends TestCase
 
     public function test_fives(): void
     {
-        $actual = Yatzy::Fives(4, 4, 4, 5, 5);
+        $actual = Yatzy::fives(4, 4, 4, 5, 5);
         self::assertSame(10, $actual->getTotal());
 
 //        self::assertSame(10, (new Yatzy(4, 4, 4, 5, 5))->Fives());
@@ -80,7 +80,7 @@ class YatzyTest extends TestCase
 
     public function test_one_pair(): void
     {
-        $actual = Yatzy::score_pair(3, 4, 3, 5, 6);
+        $actual = Yatzy::onePair(3, 4, 3, 5, 6);
         self::assertSame(6, $actual->getTotal());
 
 //        self::assertSame(6, Yatzy::score_pair(3, 4, 3, 5, 6));
@@ -90,7 +90,7 @@ class YatzyTest extends TestCase
 
     public function test_two_Pair(): void
     {
-        $actual = Yatzy::two_pair(3, 3, 5, 4, 5);
+        $actual = Yatzy::twoPair(3, 3, 5, 4, 5);
         self::assertSame(16, $actual->getTotal());
 
 //        self::assertSame(16, Yatzy::two_pair(3, 3, 5, 4, 5));
@@ -100,7 +100,7 @@ class YatzyTest extends TestCase
 
     public function test_three_of_a_kind(): void
     {
-        $actual = Yatzy::three_of_a_kind(3, 3, 3, 4, 5);
+        $actual = Yatzy::threeOfAKind(3, 3, 3, 4, 5);
         self::assertSame(9, $actual->getTotal());
 
 //        self::assertSame(9, Yatzy::three_of_a_kind(3, 3, 3, 4, 5));
