@@ -26,7 +26,7 @@ class YatzyTest extends TestCase
 
     public function test_1s(): void
     {
-        $actual = Yatzy::ones(1, 2, 3, 4, 5);
+        $actual = Yatzy::ones([1, 2, 3, 4, 5]);
         self::assertSame(1, $actual->getTotal());
 //        self::assertSame(2, Yatzy::ones(1, 2, 1, 4, 5));
 //        self::assertSame(0, Yatzy::ones(6, 2, 2, 4, 5));
@@ -35,7 +35,7 @@ class YatzyTest extends TestCase
 
     public function test_2s(): void
     {
-        $actual = Yatzy::twos(1, 2, 3, 2, 6);
+        $actual = Yatzy::twos([1, 2, 3, 2, 6]);
         self::assertSame(4, $actual->getTotal());
 
         //self::assertSame(10, Yatzy::twos(2, 2, 2, 2, 2));
@@ -43,14 +43,14 @@ class YatzyTest extends TestCase
 
     public function test_threes(): void
     {
-        $actual = Yatzy::threes(1, 2, 3, 2, 3);
+        $actual = Yatzy::threes([1, 2, 3, 2, 3]);
         self::assertSame(6, $actual->getTotal());
         //self::assertSame(12, Yatzy::threes(2, 3, 3, 3, 3));
     }
 
     public function test_fours_test(): void
     {
-        $actual = Yatzy::fours(4, 4, 4, 5, 5);
+        $actual = Yatzy::fours([4, 4, 4, 5, 5]);
         self::assertSame(12, $actual->getTotal());
 
 //        self::assertSame(12, (new Yatzy(4, 4, 4, 5, 5))->fours());
@@ -60,7 +60,7 @@ class YatzyTest extends TestCase
 
     public function test_fives(): void
     {
-        $actual = Yatzy::fives(4, 4, 4, 5, 5);
+        $actual = Yatzy::fives([4, 4, 4, 5, 5]);
         self::assertSame(10, $actual->getTotal());
 
 //        self::assertSame(10, (new Yatzy(4, 4, 4, 5, 5))->Fives());
@@ -70,7 +70,7 @@ class YatzyTest extends TestCase
 
     public function sixes_test(): void
     {
-        $actual = Yatzy::sixes(4, 4, 4, 5, 5);
+        $actual = Yatzy::sixes([4, 4, 4, 5, 5]);
         self::assertSame(0, $actual->getTotal());
 
 //        self::assertSame(0, (new Yatzy(4, 4, 4, 5, 5))->sixes());

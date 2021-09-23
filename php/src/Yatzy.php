@@ -18,111 +18,46 @@ class Yatzy
         return $this->total;
     }
 
-    public static function ones(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function ones(array $dice): self
     {
-        $sum = 0;
-        if ($d1 == 1) {
-            ++$sum;
-        }
-        if ($d2 == 1) {
-            ++$sum;
-        }
-        if ($d3 == 1) {
-            ++$sum;
-        }
-        if ($d4 == 1) {
-            ++$sum;
-        }
-        if ($d5 == 1) {
-            ++$sum;
-        }
+        $ones = array_filter($dice, fn($v) => $v === 1);
 
-        return new self($sum);
+        return new self(array_sum($ones));
     }
 
-    public static function twos(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function twos(array $dice): self
     {
-        $sum = 0;
-        if ($d1 == 2)
-            $sum += 2;
-        if ($d2 == 2)
-            $sum += 2;
-        if ($d3 == 2)
-            $sum += 2;
-        if ($d4 == 2)
-            $sum += 2;
-        if ($d5 == 2)
-            $sum += 2;
+        $twos = array_filter($dice, fn($v) => $v === 2);
 
-        return new self($sum);
+        return new self(array_sum($twos));
     }
 
-    public static function threes(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function threes(array $dice): self
     {
-        $sum = 0;
-        if ($d1 == 3)
-            $sum += 3;
-        if ($d2 == 3)
-            $sum += 3;
-        if ($d3 == 3)
-            $sum += 3;
-        if ($d4 == 3)
-            $sum += 3;
-        if ($d5 == 3)
-            $sum += 3;
+        $threes = array_filter($dice, fn($v) => $v === 3);
 
-        return new self($sum);
+        return new self(array_sum($threes));
     }
 
-    public static function fours(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function fours(array $dice): self
     {
-        $sum = 0;
-        if ($d1 == 4)
-            $sum += 4;
-        if ($d2 == 4)
-            $sum += 4;
-        if ($d3 == 4)
-            $sum += 4;
-        if ($d4 == 4)
-            $sum += 4;
-        if ($d5 == 4)
-            $sum += 4;
+        $fours = array_filter($dice, fn($v) => $v === 4);
 
-        return new self($sum);
+        return new self(array_sum($fours));
     }
 
-    public static function fives(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function fives(array $dice): self
     {
-        $sum = 0;
-        if ($d1 == 5)
-            $sum += 5;
-        if ($d2 == 5)
-            $sum += 5;
-        if ($d3 == 5)
-            $sum += 5;
-        if ($d4 == 5)
-            $sum += 5;
-        if ($d5 == 5)
-            $sum += 5;
+        $fives = array_filter($dice, fn($v) => $v === 5);
 
-        return new self($sum);
+        return new self(array_sum($fives));
     }
 
-    public static function sixes(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function sixes(array $dice): self
     {
-        $sum = 0;
-        if ($d1 == 6)
-            $sum += 6;
-        if ($d2 == 6)
-            $sum += 6;
-        if ($d3 == 6)
-            $sum += 6;
-        if ($d4 == 6)
-            $sum += 6;
-        if ($d5 == 6)
-            $sum += 6;
+        $sixes = array_filter($dice, fn($v) => $v === 6);
 
-        return new self($sum);
+        return new self(array_sum($sixes));
     }
 
     public static function onePair(int $d1, int $d2, int $d3, int $d4, int $d5): self
