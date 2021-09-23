@@ -1,11 +1,24 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Yatzy;
 
 class Yatzy
 {
-    public static function chance(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    private int $total;
+
+    private function __construct(int $total)
+    {
+        $this->total = $total;
+    }
+
+    public function getTotal(): int
+    {
+        return $this->total;
+    }
+
+    public static function chance(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $total = 0;
         $total += $d1;
@@ -13,10 +26,11 @@ class Yatzy
         $total += $d3;
         $total += $d4;
         $total += $d5;
-        return $total;
+
+        return new self($total);
     }
 
-    public static function yatzyScore(array $dice): int
+    public static function yatzyScore(array $dice): self
     {
         $counts = array_fill(0, count($dice) + 1, 0);
         foreach ($dice as $die) {
@@ -24,29 +38,35 @@ class Yatzy
         }
         foreach (range(0, count($counts) - 1) as $i) {
             if ($counts[$i] == 5)
-                return 50;
+                return new self(50);
         }
-        return 0;
+
+        return new self(0);
     }
 
-    public static function ones(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function ones(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $sum = 0;
-        if ($d1 == 1)
-            $sum += 1;
-        if ($d2 == 1)
-            $sum += 1;
-        if ($d3 == 1)
-            $sum += 1;
-        if ($d4 == 1)
-            $sum += 1;
-        if ($d5 == 1)
-            $sum += 1;
+        if ($d1 == 1) {
+            ++$sum;
+        }
+        if ($d2 == 1) {
+            ++$sum;
+        }
+        if ($d3 == 1) {
+            ++$sum;
+        }
+        if ($d4 == 1) {
+            ++$sum;
+        }
+        if ($d5 == 1) {
+            ++$sum;
+        }
 
-        return $sum;
+        return new self($sum);
     }
 
-    public static function twos(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function twos(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $sum = 0;
         if ($d1 == 2)
@@ -60,10 +80,10 @@ class Yatzy
         if ($d5 == 2)
             $sum += 2;
 
-        return $sum;
+        return new self($sum);
     }
 
-    public static function threes(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function threes(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $s = 0;
         if ($d1 == 3)
@@ -77,52 +97,61 @@ class Yatzy
         if ($d5 == 3)
             $s += 3;
 
-        return $s;
+        return new self($s);
     }
 
-    public function __construct(int $d1, int $d2, int $d3, int $d4, int $_5)
-    {
-        $this->dice = array_fill(0, 6, 0);
-        $this->dice[0] = $d1;
-        $this->dice[1] = $d2;
-        $this->dice[2] = $d3;
-        $this->dice[3] = $d4;
-        $this->dice[4] = $_5;
-    }
-
-    public function fours(): int
-    {
-        $sum = 0;
-        for ($at = 0; $at != 5; $at++) {
-            if ($this->dice[$at] == 4) {
-                $sum += 4;
-            }
-        }
-
-        return $sum;
-    }
-
-    public function Fives(): int
+    public static function fours(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $s = 0;
-        for ($i = 0; $i < 5; $i++)
-            if ($this->dice[$i] == 5)
-                $s = $s + 5;
+        if ($d1 == 4)
+            $s += 4;
+        if ($d2 == 4)
+            $s += 4;
+        if ($d3 == 4)
+            $s += 4;
+        if ($d4 == 4)
+            $s += 4;
+        if ($d5 == 4)
+            $s += 4;
 
-        return $s;
+        return new self($s);
     }
 
-    public function sixes(): int
+    public static function Fives(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
-        $sum = 0;
-        for ($at = 0; $at < 5; $at++)
-            if ($this->dice[$at] == 6)
-                $sum = $sum + 6;
+        $s = 0;
+        if ($d1 == 5)
+            $s += 5;
+        if ($d2 == 5)
+            $s += 5;
+        if ($d3 == 5)
+            $s += 5;
+        if ($d4 == 5)
+            $s += 5;
+        if ($d5 == 5)
+            $s += 5;
 
-        return $sum;
+        return new self($s);
     }
 
-    public static function score_pair(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function sixes(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    {
+        $s = 0;
+        if ($d1 == 6)
+            $s += 6;
+        if ($d2 == 6)
+            $s += 6;
+        if ($d3 == 6)
+            $s += 6;
+        if ($d4 == 6)
+            $s += 6;
+        if ($d5 == 6)
+            $s += 6;
+
+        return new self($s);
+    }
+
+    public static function score_pair(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $counts = array_fill(0, 6, 0);
         $counts[$d1 - 1] += 1;
@@ -133,12 +162,12 @@ class Yatzy
 
         for ($at = 0; $at != 6; $at++)
             if ($counts[6 - $at - 1] == 2)
-                return (6 - $at) * 2;
+                return new self((6 - $at) * 2);
 
-        return 0;
+        return new self(0);
     }
 
-    public static function two_pair(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function two_pair(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $counts = array_fill(0, 6, 0);
         $counts[$d1 - 1] += 1;
@@ -156,12 +185,12 @@ class Yatzy
             }
 
         if ($n == 2)
-            return $score * 2;
+            return new self($score * 2);
         else
-            return 0;
+            return new self(0);
     }
 
-    public static function three_of_a_kind(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function three_of_a_kind(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $t = array_fill(0, 6, 0);
         $t[$d1 - 1] += 1;
@@ -172,12 +201,12 @@ class Yatzy
 
         for ($i = 0; $i != 6; $i++)
             if ($t[$i] >= 3)
-                return ($i + 1) * 3;
+                return new self(($i + 1) * 3);
 
-        return 0;
+        return new self(0);
     }
 
-    public static function smallStraight(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function smallStraight(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $tallies = array_fill(0, 6, 0);
         $tallies[$d1 - 1] += 1;
@@ -190,12 +219,12 @@ class Yatzy
             $tallies[2] == 1 &&
             $tallies[3] == 1 &&
             $tallies[4] == 1)
-            return 15;
+            return new self(15);
 
-        return 0;
+        return new self(0);
     }
 
-    public static function largeStraight(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function largeStraight(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $tallies = array_fill(0, 6, 0);
         $tallies[$d1 - 1] += 1;
@@ -208,12 +237,13 @@ class Yatzy
             $tallies[3] == 1 &&
             $tallies[4] == 1 &&
             $tallies[5] == 1)
-            return 20;
 
-        return 0;
+            return new self(20);
+
+        return new self(0);
     }
 
-    public static function fullHouse(int $d1, int $d2, int $d3, int $d4, int $d5): int
+    public static function fullHouse(int $d1, int $d2, int $d3, int $d4, int $d5): self
     {
         $_2 = false;
         $_2_at = 0;
@@ -242,8 +272,8 @@ class Yatzy
         }
 
         if ($_2 && $_3)
-            return $_2_at * 2 + $_3_at * 3;
+            return new self($_2_at * 2 + $_3_at * 3);
         else
-            return 0;
+            return new self(0);
     }
 }
