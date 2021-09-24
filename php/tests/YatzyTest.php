@@ -112,49 +112,49 @@ class YatzyTest extends TestCase
 
     public function test_two_pair_score_0(): void
     {
-        $actual = Yatzy::twoPair(3, 6, 1, 4, 5);
+        $actual = Yatzy::twoPair([3, 6, 1, 4, 5]);
         self::assertSame(0, $actual->getTotal());
     }
 
     public function test_two_pair_score_16(): void
     {
-        $actual = Yatzy::twoPair(3, 3, 5, 4, 5);
+        $actual = Yatzy::twoPair([3, 3, 5, 4, 5]);
         self::assertSame(16, $actual->getTotal());
     }
 
     public function test_three_of_a_kind_score_0(): void
     {
-        $actual = Yatzy::threeOfAKind(3, 3, 2, 4, 5);
+        $actual = Yatzy::threeOfAKind([3, 3, 2, 4, 5]);
         self::assertSame(0, $actual->getTotal());
     }
 
     public function test_three_of_a_kind_score_9(): void
     {
-        $actual = Yatzy::threeOfAKind(3, 3, 3, 4, 5);
+        $actual = Yatzy::threeOfAKind([3, 3, 3, 4, 5]);
         self::assertSame(9, $actual->getTotal());
     }
 
     public function test_small_straight_score_0(): void
     {
-        $actual = Yatzy::smallStraight(1, 2, 6, 4, 5);
+        $actual = Yatzy::smallStraight([1, 2, 6, 4, 5]);
         self::assertSame(0, $actual->getTotal());
     }
 
     public function test_small_straight_score_15(): void
     {
-        $actual = Yatzy::smallStraight(1, 2, 3, 4, 5);
+        $actual = Yatzy::smallStraight([1, 2, 3, 4, 5]);
         self::assertSame(15, $actual->getTotal());
     }
 
     public function test_large_straight_score_0(): void
     {
-        $actual = Yatzy::largeStraight(6, 2, 1, 4, 5);
+        $actual = Yatzy::largeStraight([6, 2, 1, 4, 5]);
         self::assertSame(0, $actual->getTotal());
     }
 
     public function test_large_straight_score_20(): void
     {
-        $actual = Yatzy::largeStraight(6, 2, 3, 4, 5);
+        $actual = Yatzy::largeStraight([6, 2, 3, 4, 5]);
         self::assertSame(20, $actual->getTotal());
     }
 

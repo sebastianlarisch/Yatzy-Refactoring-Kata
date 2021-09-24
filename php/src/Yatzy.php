@@ -71,78 +71,44 @@ class Yatzy
         return new self(array_key_first($pairs) * array_pop($pairs));
     }
 
-    public static function twoPair(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function twoPair(array $dice): self
     {
-        $counts = array_fill(0, 6, 0);
-        $counts[$d1 - 1] += 1;
-        $counts[$d2 - 1] += 1;
-        $counts[$d3 - 1] += 1;
-        $counts[$d4 - 1] += 1;
-        $counts[$d5 - 1] += 1;
-        $n = 0;
-        $score = 0;
+        $values = array_count_values($dice);
 
-        for ($i = 0; $i != 6; $i++)
-            if ($counts[6 - $i - 1] >= 2) {
-                $n = $n + 1;
-                $score += (6 - $i);
-            }
+        $pairs = array_filter($values, fn($value) => $value === 2);
 
-        if ($n == 2)
-            return new self($score * 2);
-        else
-            return new self(0);
+        $total = 0;
+
+        foreach ($pairs as $key => $value) {
+            $total += $key * $value;
+        }
+
+        return new self($total);
     }
 
-    public static function threeOfAKind(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function threeOfAKind(array $dice): self
     {
-        $t = array_fill(0, 6, 0);
-        $t[$d1 - 1] += 1;
-        $t[$d2 - 1] += 1;
-        $t[$d3 - 1] += 1;
-        $t[$d4 - 1] += 1;
-        $t[$d5 - 1] += 1;
+        $values = array_count_values($dice);
 
-        for ($i = 0; $i != 6; $i++)
-            if ($t[$i] >= 3)
-                return new self(($i + 1) * 3);
+        $triple = array_filter($values, fn($value) => $value === 3);
 
-        return new self(0);
+        return new self(array_key_first($triple) * array_pop($triple));
     }
 
-    public static function smallStraight(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function smallStraight(array $dice): self
     {
-        $tallies = array_fill(0, 6, 0);
-        $tallies[$d1 - 1] += 1;
-        $tallies[$d2 - 1] += 1;
-        $tallies[$d3 - 1] += 1;
-        $tallies[$d4 - 1] += 1;
-        $tallies[$d5 - 1] += 1;
-        if ($tallies[0] == 1 &&
-            $tallies[1] == 1 &&
-            $tallies[2] == 1 &&
-            $tallies[3] == 1 &&
-            $tallies[4] == 1)
+        if (empty(array_diff([1,2,3,4,5], $dice))) {
             return new self(15);
+        }
 
         return new self(0);
     }
 
-    public static function largeStraight(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function largeStraight(array $dice): self
     {
-        $tallies = array_fill(0, 6, 0);
-        $tallies[$d1 - 1] += 1;
-        $tallies[$d2 - 1] += 1;
-        $tallies[$d3 - 1] += 1;
-        $tallies[$d4 - 1] += 1;
-        $tallies[$d5 - 1] += 1;
-        if ($tallies[1] == 1 &&
-            $tallies[2] == 1 &&
-            $tallies[3] == 1 &&
-            $tallies[4] == 1 &&
-            $tallies[5] == 1)
-
+        if (empty(array_diff([2,3,4,5,6 ], $dice))) {
             return new self(20);
+        }
 
         return new self(0);
     }
