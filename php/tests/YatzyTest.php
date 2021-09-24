@@ -160,19 +160,19 @@ class YatzyTest extends TestCase
 
     public function test_full_house_score_0(): void
     {
-        $actual = Yatzy::fullHouse(6, 2, 1, 2, 6);
+        $actual = Yatzy::fullHouse([6, 2, 1, 2, 6]);
         self::assertSame(0, $actual->getTotal());
     }
 
     public function test_full_house_score_18(): void
     {
-        $actual = Yatzy::fullHouse(6, 2, 2, 2, 6);
+        $actual = Yatzy::fullHouse([6, 2, 2, 2, 6]);
         self::assertSame(18, $actual->getTotal());
     }
 
     public function test_chance_scores_sum_of_all_dice(): void
     {
-        $actual = Yatzy::chance(2, 3, 4, 5, 1);
+        $actual = Yatzy::chance([2, 3, 4, 5, 1]);
         self::assertSame(15, $actual->getTotal());
     }
 

@@ -8,6 +8,11 @@ class Yatzy
 {
     private int $total;
 
+    private const SCORE_ZERO = 0;
+    private const SCORE_SMALL_STREET = 15;
+    private const SCORE_LARGE_STREET = 20;
+    private const SCORE_YATZY = 50;
+
     private function __construct(int $total)
     {
         $this->total = $total;
@@ -97,79 +102,52 @@ class Yatzy
 
     public static function smallStraight(array $dice): self
     {
-        if (empty(array_diff([1,2,3,4,5], $dice))) {
-            return new self(15);
+        if (empty(array_diff([1, 2, 3, 4, 5], $dice))) {
+            return new self(self::SCORE_SMALL_STREET);
         }
 
-        return new self(0);
+        return new self(self::SCORE_ZERO);
     }
 
     public static function largeStraight(array $dice): self
     {
-        if (empty(array_diff([2,3,4,5,6 ], $dice))) {
-            return new self(20);
+        if (empty(array_diff([2, 3, 4, 5, 6], $dice))) {
+            return new self(self::SCORE_LARGE_STREET);
         }
 
-        return new self(0);
+        return new self(self::SCORE_ZERO);
     }
 
-    public static function fullHouse(int $d1, int $d2, int $d3, int $d4, int $d5): self
-    {
-        $_2 = false;
-        $_2_at = 0;
-        $_3 = False;
-        $_3_at = 0;
-
-        $tallies = array_fill(0, 6, 0);
-        $tallies[$d1 - 1] += 1;
-        $tallies[$d2 - 1] += 1;
-        $tallies[$d3 - 1] += 1;
-        $tallies[$d4 - 1] += 1;
-        $tallies[$d5 - 1] += 1;
-
-        foreach (range(0, 5) as $i) {
-            if ($tallies[$i] == 2) {
-                $_2 = True;
-                $_2_at = $i + 1;
-            }
-        }
-
-        foreach (range(0, 5) as $i) {
-            if ($tallies[$i] == 3) {
-                $_3 = True;
-                $_3_at = $i + 1;
-            }
-        }
-
-        if ($_2 && $_3)
-            return new self($_2_at * 2 + $_3_at * 3);
-        else
-            return new self(0);
-    }
-
-    public static function chance(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function fullHouse(array $dice): self
     {
         $total = 0;
-        $total += $d1;
-        $total += $d2;
-        $total += $d3;
-        $total += $d4;
-        $total += $d5;
+
+        $values = array_count_values($dice);
+
+        $double = array_filter($values, fn($value) => $value === 2);
+        $triple = array_filter($values, fn($value) => $value === 3);
+
+        if (empty($double) || empty($triple)) {
+            return new self(self::SCORE_ZERO);
+        }
+
+        $total += array_key_first($double) * array_pop($double);
+        $total += array_key_first($triple) * array_pop($triple);
 
         return new self($total);
     }
 
+    public static function chance(array $dice): self
+    {
+        return new self(array_sum($dice));
+    }
+
     public static function yatzy(array $dice): self
     {
-        $counts = array_fill(0, count($dice) + 1, 0);
-        foreach ($dice as $die) {
-            $counts[$die - 1] += 1;
-        }
-        foreach (range(0, count($counts) - 1) as $i) {
-            if ($counts[$i] == 5)
-                return new self(50);
+        if (count(array_unique($dice)) === 1) {
+            return new self(self::SCORE_YATZY);
         }
 
-        return new self(0);
+        return new self(self::SCORE_ZERO);
     }
 }
