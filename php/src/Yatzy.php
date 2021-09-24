@@ -60,20 +60,15 @@ class Yatzy
         return new self(array_sum($sixes));
     }
 
-    public static function onePair(int $d1, int $d2, int $d3, int $d4, int $d5): self
+    public static function onePair(array $dice): self
     {
-        $counts = array_fill(0, 6, 0);
-        $counts[$d1 - 1] += 1;
-        $counts[$d2 - 1] += 1;
-        $counts[$d3 - 1] += 1;
-        $counts[$d4 - 1] += 1;
-        $counts[$d5 - 1] += 1;
+        rsort($dice);
 
-        for ($at = 0; $at != 6; $at++)
-            if ($counts[6 - $at - 1] == 2)
-                return new self((6 - $at) * 2);
+        $values = array_count_values($dice);
 
-        return new self(0);
+        $pairs = array_filter($values, fn($value) => $value === 2);
+
+        return new self(array_key_first($pairs) * array_pop($pairs));
     }
 
     public static function twoPair(int $d1, int $d2, int $d3, int $d4, int $d5): self

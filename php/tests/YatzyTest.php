@@ -88,14 +88,26 @@ class YatzyTest extends TestCase
 
     public function test_one_pair_score_0(): void
     {
-        $actual = Yatzy::onePair(3, 4, 1, 5, 6);
+        $actual = Yatzy::onePair([3, 4, 1, 5, 6]);
         self::assertSame(0, $actual->getTotal());
     }
 
     public function test_one_pair_score_6(): void
     {
-        $actual = Yatzy::onePair(3, 4, 3, 5, 6);
+        $actual = Yatzy::onePair([3, 4, 3, 5, 6]);
         self::assertSame(6, $actual->getTotal());
+    }
+
+    public function test_one_pair_score_10(): void
+    {
+        $actual = Yatzy::onePair([5, 3, 3, 5, 6]);
+        self::assertSame(10, $actual->getTotal());
+    }
+
+    public function test_one_pair_score_12(): void
+    {
+        $actual = Yatzy::onePair([3, 4, 6, 5, 6]);
+        self::assertSame(12, $actual->getTotal());
     }
 
     public function test_two_pair_score_0(): void
